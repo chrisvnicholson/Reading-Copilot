@@ -1,0 +1,13 @@
+my-reading-copilot-extension/
+├── manifest.json
+├── icons/ (optional: for extension icons)
+│   ├── icon16.png
+│   └── icon48.png
+├── content_script.js
+├── background.js
+├── sidebar/
+│   ├── sidebar.html
+│   ├── sidebar.css
+│   └── sidebar.js
+└── backend/ (This will be a separate project/server)
+    └── server.js (e.g., Node.js/Express)

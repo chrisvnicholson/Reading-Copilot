@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "Reading Copilot",
+  "version": "0.1.0",
+  "description": "Annotate web content and chat with an LLM.",
+  "permissions": ["tabs", "unlimitedStorage", "scripting", "notifications", "contextMenus", "activeTab"],
+  "host_permissions": ["http://localhost:3000/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content_script.js"]
+    }
+  ],
+  "action": {
+    "default_title": "Toggle Reading Copilot Sidebar"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["sidebar/sidebar.html"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
