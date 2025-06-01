@@ -76,7 +76,11 @@ function sendChatMessage() {
 
 function appendMessage(text, className) {
   const messageDiv = document.createElement('div');
-  messageDiv.textContent = text;
+  if (className === 'llm-message') {
+    messageDiv.innerHTML = text; // <--- Use innerHTML to render HTML from LLM
+  } else {
+    messageDiv.textContent = text; // User messages are plain text
+  }
   messageDiv.className = className;
   chatHistoryDiv.appendChild(messageDiv);
   chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight; // Scroll to bottom
