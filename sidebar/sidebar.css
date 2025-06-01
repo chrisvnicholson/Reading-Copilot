@@ -1,8 +1,9 @@
 body { font-family: sans-serif; margin: 0; padding: 10px; display: flex; flex-direction: column; height: 100vh; box-sizing: border-box; }
 #annotations-container, #chat-container { margin-bottom: 15px; }
-#current-annotation-text { background-color: #f0f0f0; padding: 8px; border-radius: 4px; min-height: 40px; word-wrap: break-word; }
-#current-annotation-url { font-size: 0.8em; color: #555; display: block; margin-top: 4px;}
-#chat-history { border: 1px solid #ddd; padding: 8px; height: 200px; overflow-y: auto; margin-bottom: 8px; background-color: #f9f9f9; }
+#current-annotation-text { background-color: #f0f0f0; padding: 8px; border-radius: 4px; min-height: 40px; word-wrap: break-word;   max-height: 150px; 
+  overflow-y: auto; }
+#current-annotation-url { font-size: 0.99em; color: #555; display: block; margin-top: 4px;}
+#chat-history { border: 1px solid #ddd; padding: 8px; height: 400px; overflow-y: auto; margin-bottom: 8px; background-color: #f9f9f9; }
 .user-message,.llm-message { margin-bottom: 5px; padding: 5px; border-radius: 3px; }
 .user-message { background-color: #e1f5fe; text-align: right; }
 .llm-message { background-color: #e8f5e9; }
