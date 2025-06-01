@@ -1,7 +1,8 @@
-require('dotenv').config(); // Load environment variables from .env file
+require('dotenv').config(); 
 const express = require('express');
 const cors = require('cors');
 const { OpenAI } = require("openai");
+const markdown = require('markdown-js'); 
 
 const app = express();
 const port = 3000;
@@ -16,8 +17,8 @@ app.use(express.json());
 
 // Simple health check endpoint
 app.get('/', (req, res) => {
-  res.json({ 
-    status: 'Server is running!', 
+  res.json({
+    status: 'Server is running!',
     endpoints: {
       'POST /api/chat-with-llm': 'Main endpoint for LLM chat'
     }
@@ -25,7 +26,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/api/chat-with-llm', async (req, res) => {
-  const { snippet, prompt, pageUrl } = req.body;
+  const { snippet, prompt, pageUrl, systemPrompt: customSystemPrompt } = req.body; // Assuming you might add systemPrompt later
 
   console.log("Received data for LLM:", { snippet, prompt, pageUrl });
 
@@ -35,11 +36,12 @@ app.post('/api/chat-with-llm', async (req, res) => {
 
   try {
     const completion = await openai.chat.completions.create({
-      model: "gpt-4o", // Or your preferred model, e.g., "gpt-4"
+      model: "gpt-4.1", 
       messages: [
         {
           role: "system",
-          content: "You are a helpful assistant that helps users understand and learn from text snippets they encounter online. Provide clear, informative responses based on the text snippet and user's question."
+          
+          content: customSystemPrompt || "You are a helpful assistant that helps users understand and learn from text snippets they encounter online. Provide clear, informative responses based on the text snippet and user's question. Feel free to use Markdown for formatting if it enhances clarity."
         },
         {
           role: "user",
@@ -51,7 +53,8 @@ app.post('/api/chat-with-llm', async (req, res) => {
     const llmReply = completion.choices[0]?.message?.content;
 
     if (llmReply) {
-      res.json({ reply: llmReply });
+      const htmlReply = markdown.toHTML(llmReply); // <--- Parse Markdown to HTML
+      res.json({ reply: htmlReply }); // <--- Send HTML reply
     } else {
       res.status(500).json({ error: "No response content from LLM." });
     }
@@ -65,4 +68,3 @@ app.post('/api/chat-with-llm', async (req, res) => {
 app.listen(port, () => {
   console.log(`Backend server listening at http://localhost:${port}`);
 });
-
