@@ -8,7 +8,7 @@ To set up locally, run:
 
 npm init -y
 
-npm install express cors openai dotenv
+npm install express cors openai dotenv markdown-js
 
 You'll need an OpenAI API key saved as an env variable locally. 
 
